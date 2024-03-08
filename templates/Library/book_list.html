@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book</title>
+</head>
+<body>
+    <h1>Books: </h1>
+    <ul>
+         {% for i in books %}
+
+            <li>{{ i.title }}</li>
+         {% endfor %}
+
+    </ul>
+</body>
+</html>
