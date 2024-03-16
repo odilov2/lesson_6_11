@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Book, BookRecord, Customer
 from import_export.admin import ImportExportModelAdmin
 
+
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'role']

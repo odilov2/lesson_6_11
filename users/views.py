@@ -5,11 +5,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from forms import UserRegisterForm, UserLoginForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class HomePageView(View):
-    def get(self, request):
-        return render(request, "users/home.html")
+# class HomePageView(View):
+#     def get(self, request):
+#         return render(request, "users/home.html")
 
 
 class UserLoginView(View):
@@ -21,15 +22,21 @@ class UserLoginView(View):
         return render(request, "users/login.html", context)
 
     def post(self, request):
-        login_form = AuthenticationForm(data=request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        data = {
+            "username": username,
+            "password": password
+        }
+        login_form = AuthenticationForm(data=data)
 
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            return redirect("home")
+            return redirect("landing")
         else:
             context = {
-                "form": login_form
+                "form": login_form,
             }
             return render(request, "users/login.html", context)
 
@@ -43,7 +50,20 @@ class UserRegisterView(View):
         return render(request, "users/register.html", context)
 
     def post(self, request):
-        create_form = UserRegisterForm(data=request.POST)
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password_1 = request.POST["password_1"]
+        # password_2 = request.POST["password_2"]
+        data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password_1
+        }
+        create_form = UserRegisterForm(data=data)
         if create_form.is_valid():
             create_form.save()
             return redirect("login")
@@ -55,7 +75,7 @@ class UserRegisterView(View):
             return render(request, "users/register.html", context)
 
 
-class UserListView(View):
+class UserListView(LoginRequiredMixin, View):
     def get(self, request):
         search = request.GET.get("search")
         if not search:

@@ -7,7 +7,14 @@
 <body>
   <h1>Landing Page</h1>
   <p>
-    <a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
+      <a href="{% url 'users' %}">Users</a> | <a href="{% url 'books' %}">Books</a> |
+      {% if request.user.is_verified %}
+      <a href="">LOg Out</a>
+      {% else %}
+          <a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+
+
   </p>
 </body>
 </html>
