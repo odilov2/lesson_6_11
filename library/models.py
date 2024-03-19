@@ -6,6 +6,7 @@ class Book(models.Model):
     description = models.TextField()
     price = models.FloatField()
     count = models.PositiveIntegerField(default=1)
+    image = models.ImageField(upload_to='library/authors/')
 
     def __str__(self):
         return f"{self.id} {self.title}"
@@ -30,3 +31,10 @@ class BookRecord(models.Model):
 
     def __str__(self):
         return f"{self.customer} {self.book}"
+
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='library/images/')
+    create_date = models.DateField(auto_now_add=True)
