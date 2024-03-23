@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     # apps
     'users',
     'library',
+    'course',
+    'blog',
     'django_extensions',
 ]
 

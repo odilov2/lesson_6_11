@@ -4,8 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from users.forms import UserLoginForm, UserRegisterForm
 
 
 # class HomePageView(View):
@@ -120,3 +120,10 @@ class UserSettingsView(View):
         user.set_password(password)
         user.save()
         return HttpResponse("<h1>Successful</h1>")
+
+
+class UserDeleteView(View):
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        user.delete()
+        return redirect("users")

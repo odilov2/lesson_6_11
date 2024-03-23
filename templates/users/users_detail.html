@@ -14,8 +14,10 @@
     </p>
     <a href="{% url 'settings' user.id %}">
         <button type="submit">Settings</button>
-
+        <br>
     </a>
-
+     <a href="{% url 'delete-user' user.id %}">
+        <button type="submit">Delete</button>
+    </a>
 </body>
 </html>
